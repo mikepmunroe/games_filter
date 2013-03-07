@@ -1,0 +1,17 @@
+<h1>Athletes</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>URL</th>
+      <th>Affiliate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @athletes.each do |athlete| %>
+      <tr>
+        <td><%= athlete.url %></td>
+        <td><%= athlete.affiliate %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
