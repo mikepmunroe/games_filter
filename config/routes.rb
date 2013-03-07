@@ -1,4 +1,8 @@
 GamesFilter::Application.routes.draw do
+  root :to => 'athletes', :action => :index
+
+  resources :athletes
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
