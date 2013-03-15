@@ -26,7 +26,7 @@ class Athlete < ActiveRecord::Base
       puts name
       athlete.name = name.gsub(/^[^:]+:\s*/, "")
       puts athlete.name
-      attributes = Array.new
+      attributes = []
       details.xpath('//dd//text()').each do |attribute|
         attributes << attribute.text
       end
@@ -36,6 +36,31 @@ class Athlete < ActiveRecord::Base
       athlete.age = attributes[4]
       athlete.height = attributes[5]
       athlete.weight = attributes[6]
+      athlete.save
+    end
+  end
+
+  def self.populate_scores
+    athletes = Athlete.all
+    athletes.each do |athlete|
+      details = Nokogiri::HTML(open("http://games.crossfit.com" + athlete.url))
+      leaderboard_src = details.xpath('//iframe[@id="cf_leaderboard"]/@src').text()
+      leaderboard = Nokogiri::HTML(open(leaderboard_src))
+      scores = []
+      leaderboard.xpath('//table/tbody/tr[@class="highlight"]/td/span[@class="display"]/text()').each do |score|
+        scores << score.text
+      end
+      athlete.w1 = scores[0]
+      athlete.w2 = scores[1]
+      athlete.w3 = scores[2]
+      athlete.w4 = scores[3]
+      athlete.w5 = scores[4]
+      scores.each do |value|
+        if (value != '--')
+          value = value.sub /\s*\(.+\)$/, ''
+        end
+      end
+      athlete.total = scores.sum
       athlete.save
     end
   end

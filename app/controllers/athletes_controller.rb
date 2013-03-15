@@ -2,7 +2,8 @@ class AthletesController < ApplicationController
   # GET /athletes
   # GET /athletes.json
   def index
-    @athletes = Athlete.all
+    # @athletes = Athlete.all
+    @athletes = Athlete.order("total asc")
 
     respond_to do |format|
       format.html # index.html.erb

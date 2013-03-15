@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130314010816) do
+ActiveRecord::Schema.define(:version => 20130315004828) do
 
   create_table "athletes", :force => true do |t|
     t.string   "url"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20130314010816) do
     t.integer  "age"
     t.string   "height"
     t.string   "weight"
+    t.integer  "total"
   end
 
 end
