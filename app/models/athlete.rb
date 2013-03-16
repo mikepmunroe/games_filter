@@ -46,6 +46,7 @@ class Athlete < ActiveRecord::Base
       leaderboard_src = details.xpath('//iframe[@id="cf_leaderboard"]/@src').text()
       leaderboard = Nokogiri::HTML(open(leaderboard_src))
       scores = []
+      values = []
       leaderboard.xpath('//table/tbody/tr[@class="highlight"]/td/span[@class="display"]/text()').each do |score|
         scores << score.text
       end
@@ -55,11 +56,11 @@ class Athlete < ActiveRecord::Base
       athlete.w4 = scores[3]
       athlete.w5 = scores[4]
       scores.each do |value|
-        if (value != '--')
-          value = value.sub /\s*\(.+\)$/, ''
+        if (match = value.scan(/\A\d*/))
+          values << match[0].to_i
         end
       end
-      athlete.total = scores.sum
+      athlete.total = values.inject(0) {|sum, i| sum + i}
       athlete.save
     end
   end
