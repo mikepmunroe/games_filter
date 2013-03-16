@@ -9,7 +9,6 @@ class Athlete < ActiveRecord::Base
 
     urls.each do |affiliate, url|
       athlete_list = Nokogiri::HTML(open(url))
-      # puts athlete_list.at_css("title").text
       athlete_list.css("#block-search-athlete-affiliate-team-blocks-affiliate-athletes a").each do |athlete|
         record = Athlete.find_or_initialize_by_url(athlete['href'])
         record.affiliate = affiliate.to_s
