@@ -18,7 +18,7 @@
     <% @athletes.each do |athlete| %>
       <tr>
         <td><%= athlete.name %></td>
-        <td><%= athlete.url %></td>
+        <td><%= line_to athlete.url, "http://games.crossfit.com/#{athlete.url}" %></td>
         <td><%= athlete.affiliate %></td>
         <td><%= athlete.age %></td>
         <td><%= athlete.w1 %></td>
@@ -31,3 +31,4 @@
     <% end %>
   </tbody>
 </table>
+
