@@ -18,21 +18,17 @@ class Athlete < ActiveRecord::Base
   end
 
   def self.populate_details
-    athletes = Athlete.all
-    athletes.each do |athlete|
+    Athlete.all.each do |athlete|
       details = Nokogiri::HTML(open("http://games.crossfit.com" + athlete.url))
       name = details.at_css(".page-title").text
       puts name
       athlete.name = name.gsub(/^[^:]+:\s*/, "")
       puts athlete.name
-      attributes = []
-      details.xpath('//dd//text()').each do |attribute|
-        attributes << attribute.text
-      end
+      attributes = details.xpath('//dd//text()').collect(&:text)
       athlete.region = attributes[0]
-      athlete.team = attributes[1]
+      athlete.team   = attributes[1]
       athlete.gender = attributes[3]
-      athlete.age = attributes[4]
+      athlete.age    = attributes[4]
       athlete.height = attributes[5]
       athlete.weight = attributes[6]
       athlete.save
@@ -40,21 +36,17 @@ class Athlete < ActiveRecord::Base
   end
 
   def self.populate_scores
-    athletes = Athlete.all
-    athletes.each do |athlete|
+    Athlete.all.each do |athlete|
       details = Nokogiri::HTML(open("http://games.crossfit.com" + athlete.url))
       leaderboard_src = details.xpath('//iframe[@id="cf_leaderboard"]/@src').text()
       leaderboard = Nokogiri::HTML(open(leaderboard_src))
-      scores = []
-      values = []
-      leaderboard.xpath('//table/tbody/tr[@class="highlight"]/td/span[@class="display"]/text()').each do |score|
-        scores << score.text
-      end
+      scores = leaderboard.xpath('//table/tbody/tr[@class="highlight"]/td/span[@class="display"]/text()').collect(&:text)
       athlete.w1 = scores[0]
       athlete.w2 = scores[1]
       athlete.w3 = scores[2]
       athlete.w4 = scores[3]
       athlete.w5 = scores[4]
+      values = []
       scores.each do |value|
         if (match = value.scan(/\A\d*/))
           values << match[0].to_i
@@ -65,3 +57,4 @@ class Athlete < ActiveRecord::Base
     end
   end
 end
+
