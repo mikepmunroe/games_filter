@@ -3,7 +3,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>URL</th>
       <th>Affiliate</th>
       <th>Age</th>
       <th>13.1</th>
@@ -18,6 +17,7 @@
     <% @athletes.each do |athlete| %>
       <tr>
         <td><%= link_to athlete.name, "http://games.crossfit.com#{athlete.url}" %></td>
+        <td><%= athlete.affiliate %></td>
         <td><%= athlete.age %></td>
         <td><%= athlete.w1 %></td>
         <td><%= athlete.w2 %></td>

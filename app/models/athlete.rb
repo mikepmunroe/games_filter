@@ -42,10 +42,10 @@ class Athlete < ActiveRecord::Base
       leaderboard = Nokogiri::HTML(open(leaderboard_src))
       scores = leaderboard.xpath('//table/tbody/tr[@class="highlight"]/td/span[@class="display"]/text()').collect(&:text)
       athlete.w1 = scores[0]
-      athlete.w2 = scores[1]
-      athlete.w3 = scores[2]
-      athlete.w4 = scores[3]
-      athlete.w5 = scores[4]
+      athlete.w2 = scores[2]
+      athlete.w3 = scores[4]
+      athlete.w4 = scores[6]
+      athlete.w5 = scores[8]
       values = []
       scores.each do |value|
         if (match = value.scan(/\A\d*/))
