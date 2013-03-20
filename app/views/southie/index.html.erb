@@ -1,0 +1,32 @@
+<h1>Athletes</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Affiliate</th>
+      <th>Age</th>
+      <th>13.1</th>
+      <th>13.2</th>
+      <th>13.3</th>
+      <th>13.4</th>
+      <th>13.5</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @athletes.each do |athlete| %>
+      <tr>
+        <td><%= link_to athlete.name, "http://games.crossfit.com#{athlete.url}" %></td>
+        <td><%= athlete.affiliate %></td>
+        <td><%= athlete.age %></td>
+        <td><%= athlete.w1 %></td>
+        <td><%= athlete.w2 %></td>
+        <td><%= athlete.w3 %></td>
+        <td><%= athlete.w4 %></td>
+        <td><%= athlete.w5 %></td>
+        <td><%= athlete.total %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
