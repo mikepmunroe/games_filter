@@ -53,11 +53,11 @@ class Athlete < ActiveRecord::Base
           # values, so check match for 2 values
           if (match[1])
             positions << match[0].to_i
-            athlete.qualified = TRUE;
+            athlete.qualified = true
           # in the case that a score shows a user is disqualified,
           # such as --(186), set the disqualified state in the db
           else
-            athlete.qualified = FALSE;
+            athlete.qualified = false
           end
         end
       end
