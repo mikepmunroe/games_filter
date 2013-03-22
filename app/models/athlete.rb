@@ -46,13 +46,22 @@ class Athlete < ActiveRecord::Base
       athlete.w3 = scores[4]
       athlete.w4 = scores[6]
       athlete.w5 = scores[8]
-      values = []
+      positions = []
       scores.each do |value|
-        if (match = value.scan(/\A\d*/))
-          values << match[0].to_i
+        if (match = value.scan(/\d/))
+          # a disqualified athlete will have integers for position and score
+          # values, so check match for 2 values
+          if (match[1])
+            positions << match[0].to_i
+            athlete.qualified = TRUE;
+          # in the case that a score shows a user is disqualified,
+          # such as --(186), set the disqualified state in the db
+          else
+            athlete.qualified = FALSE;
+          end
         end
       end
-      athlete.total = values.inject(0) {|sum, i| sum + i}
+      athlete.total = positions.inject(0) {|sum, i| sum + i}
       athlete.save
     end
   end
