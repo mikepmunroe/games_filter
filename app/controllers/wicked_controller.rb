@@ -1,6 +1,6 @@
 class WickedController < ApplicationController
   def index
-    athletes             = Athlete.where(:affiliate => 'wicked').order('total asc')
+    athletes             = Athlete.where(:affiliate => 'wicked').order('qualified asc')
     male_athletes        = athletes.where(:gender => 'Male')
     female_athletes      = athletes.where(:gender => 'Female')
     @individual_men      = male_athletes.where('age < 40')

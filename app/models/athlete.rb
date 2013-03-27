@@ -70,23 +70,14 @@ class Athlete < ActiveRecord::Base
 
       scores.each do |value|
         puts value
-        if (value.match(/\d*\d/))
-          match = value.match(/\d*\d/)
-          # a disqualified athlete will have integers for position and score
-          # values, so check match for 2 values
+        if (match = value.match(/\A\d/))
           if (match)
-            puts match
-            puts 'in true'
             athlete.qualified = true
-          # in the case that a score shows a user is disqualified,
-          # such as --(186), set the disqualified state in the db
           else
-            puts 'in else'
             athlete.qualified = false
           end
         end
       end
-
       athlete.save
     end
   end
