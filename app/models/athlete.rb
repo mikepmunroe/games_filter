@@ -49,9 +49,7 @@ class Athlete < ActiveRecord::Base
       positions = []
       scores.each do |value|
         if (match = value.scan(/\A\d*/))
-          if (match[1])
-            positions << match[0].to_i
-          end
+          positions << match[0].to_i
         end
       end
       athlete.total = positions.inject(0) {|sum, i| sum + i}
