@@ -69,11 +69,9 @@ class Athlete < ActiveRecord::Base
       scores.each do |value|
         puts value
         if (match = value.match(/\A\d/))
-          if (match)
-            athlete.qualified = true
-          else
-            athlete.qualified = false
-          end
+          athlete.qualified = true
+        else
+          athlete.qualified = false
         end
       end
       athlete.save
